@@ -7,6 +7,8 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
+const stateModels = require('./lib/state-models');
+const VeSyncClient = require('./lib/vesync-client');
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -37,30 +39,37 @@ class Vesync extends utils.Adapter {
         // Reset the connection indicator during startup
         this.setState('info.connection', false, true);
 
-        // The adapters config (in the instance object everything under the attribute "native") is accessible via
-        // this.config:
-        this.log.info('config option1: ' + this.config.option1);
-        this.log.info('config option2: ' + this.config.option2);
+        // login to cloud!
+        this.log.info('config polling interval: ' + this.config.pollingInterval);
+        this.log.info('config username: ' + this.config.username);
+        this.log.info('config password: ' + this.config.password);
+        const client = new VeSyncClient();
+        await client.login();
 
-        /*
-        For every state in the system there has to be also an object of type state
-        Here a simple template for a boolean variable named "testVariable"
-        Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-        */
-        await this.setObjectNotExistsAsync('testVariable', {
-            type: 'state',
-            common: {
-                name: 'testVariable',
-                type: 'boolean',
-                role: 'indicator',
-                read: true,
-                write: true,
-            },
-            native: {},
-        });
+        this.setState('info.connection', true, true);
+
+        const devices = await client.getDevices();
+
+        for (const device of devices) {
+            await this.setObjectNotExistsAsync(`devices.${device.id}`, {
+                type: 'device',
+                common: {
+                    name: device.name,
+                },
+                native: {}
+            });
+            const states = stateModels[device.type];
+            for (const state of states) {
+                await this.setObjectNotExistsAsync(`devices.${device.id}.${state.id}`, {
+                    type: 'state',
+                    common: state.common,
+                    native: state.native || {}
+                });
+            }
+        }
 
         // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-        this.subscribeStates('testVariable');
+        // this.subscribeStates('testVariable');
         // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
         // this.subscribeStates('lights.*');
         // Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
@@ -71,21 +80,21 @@ class Vesync extends utils.Adapter {
             you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
         */
         // the variable testVariable is set to true as command (ack=false)
-        await this.setStateAsync('testVariable', true);
+        // await this.setStateAsync('testVariable', true);
 
         // same thing, but the value is flagged "ack"
         // ack should be always set to true if the value is received from or acknowledged from the target system
-        await this.setStateAsync('testVariable', { val: true, ack: true });
+        // await this.setStateAsync('testVariable', { val: true, ack: true });
 
         // same thing, but the state is deleted after 30s (getState will return null afterwards)
-        await this.setStateAsync('testVariable', { val: true, ack: true, expire: 30 });
+        // await this.setStateAsync('testVariable', { val: true, ack: true, expire: 30 });
 
-        // examples for the checkPassword/checkGroup functions
-        let result = await this.checkPasswordAsync('admin', 'iobroker');
-        this.log.info('check user admin pw iobroker: ' + result);
+        // // examples for the checkPassword/checkGroup functions
+        // let result = await this.checkPasswordAsync('admin', 'iobroker');
+        // this.log.info('check user admin pw iobroker: ' + result);
 
-        result = await this.checkGroupAsync('admin', 'admin');
-        this.log.info('check group user admin group admin: ' + result);
+        // result = await this.checkGroupAsync('admin', 'admin');
+        // this.log.info('check group user admin group admin: ' + result);
     }
 
     /**
@@ -99,6 +108,7 @@ class Vesync extends utils.Adapter {
             // clearTimeout(timeout2);
             // ...
             // clearInterval(interval1);
+            this.setState('info.connection', false, true);
 
             callback();
         } catch (e) {

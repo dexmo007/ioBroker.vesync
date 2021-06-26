@@ -1,97 +1,93 @@
 {
-    "common": {
-        "name": "vesync",
-        "version": "0.0.1",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            }
-        },
-        "titleLang": {
-            "en": "VeSync",
-            "de": "VeSync",
-            "ru": "VeSync",
-            "pt": "VeSync",
-            "nl": "VeSync",
-            "fr": "VeSync",
-            "it": "VeSync",
-            "es": "VeSync",
-            "pl": "VeSync",
-            "zh-cn": "速度同步"
-        },
-        "desc": {
-            "en": "Adapter that connects to the VeSync REST API",
-            "de": "Adapter, der sich mit der VeSync REST API verbindet",
-            "ru": "Адаптер, который подключается к VeSync REST API",
-            "pt": "Adaptador que se conecta ao VeSync REST API",
-            "nl": "Adapter die verbinding maakt met de VeSync REST API",
-            "fr": "Adaptateur qui se connecte à l'API REST VeSync",
-            "it": "Adattatore che si collega all'API REST di VeSync",
-            "es": "Adaptador que se conecta a la API REST de VeSync",
-            "pl": "Adapter, który łączy się z interfejsem API VeSync REST",
-            "zh-cn": "连接到 VeSync REST API 的适配器"
-        },
-        "authors": [
-            "dexmo007 <info@dexmo-hq.com>"
-        ],
-        "keywords": [
-            "vesync",
-            "levoit"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "icon": "vesync.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/dexmo007/ioBroker.vesync/master/admin/vesync.png",
-        "readme": "https://github.com/dexmo007/ioBroker.vesync/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "iot-systems",
-        "compact": true,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ]
+  "common": {
+    "name": "vesync",
+    "version": "0.0.1",
+    "news": {
+      "0.0.1": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "首次出版"
+      }
     },
-    "native": {
-        "option1": true,
-        "option2": "42"
+    "titleLang": {
+      "en": "VeSync",
+      "de": "VeSync",
+      "ru": "VeSync",
+      "pt": "VeSync",
+      "nl": "VeSync",
+      "fr": "VeSync",
+      "it": "VeSync",
+      "es": "VeSync",
+      "pl": "VeSync",
+      "zh-cn": "速度同步"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Adapter that connects to the VeSync REST API",
+      "de": "Adapter, der sich mit der VeSync REST API verbindet",
+      "ru": "Адаптер, который подключается к VeSync REST API",
+      "pt": "Adaptador que se conecta ao VeSync REST API",
+      "nl": "Adapter die verbinding maakt met de VeSync REST API",
+      "fr": "Adaptateur qui se connecte à l'API REST VeSync",
+      "it": "Adattatore che si collega all'API REST di VeSync",
+      "es": "Adaptador que se conecta a la API REST de VeSync",
+      "pl": "Adapter, który łączy się z interfejsem API VeSync REST",
+      "zh-cn": "连接到 VeSync REST API 的适配器"
+    },
+    "authors": ["dexmo007 <info@dexmo-hq.com>"],
+    "keywords": ["vesync", "levoit"],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "icon": "vesync.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/dexmo007/ioBroker.vesync/master/admin/vesync.png",
+    "readme": "https://github.com/dexmo007/ioBroker.vesync/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "iot-systems",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
     ]
+  },
+  "native": {
+    "pollingInterval": 30,
+    "username": null,
+    "password": null
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Device or service connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }
