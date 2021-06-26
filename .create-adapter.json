@@ -1,0 +1,42 @@
+{
+    "cli": true,
+    "adapterName": "vesync",
+    "title": "VeSync",
+    "description": "Adapter that connects to the VeSync REST API",
+    "keywords": [
+        "vesync",
+        "levoit"
+    ],
+    "expert": "yes",
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [],
+    "type": "iot-systems",
+    "startMode": "daemon",
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "connectionIndicator": "yes",
+    "language": "JavaScript",
+    "adminReact": "yes",
+    "tools": [
+        "ESLint",
+        "type checking",
+        "devcontainer"
+    ],
+    "releaseScript": "yes",
+    "devServer": "yes",
+    "devServerPort": 8081,
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "es6class": "yes",
+    "authorName": "dexmo007",
+    "authorGithub": "dexmo007",
+    "authorEmail": "info@dexmo-hq.com",
+    "gitRemoteProtocol": "SSH",
+    "gitCommit": "yes",
+    "license": "MIT License",
+    "ci": "gh-actions",
+    "dependabot": "yes",
+    "creatorVersion": "1.34.0"
+}
