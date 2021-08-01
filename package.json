@@ -17,7 +17,7 @@
     "url": "git@github.com:dexmo007/ioBroker.vesync.git"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.5.0"
+    "@iobroker/adapter-core": "^2.5.1"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^2.0.0",
